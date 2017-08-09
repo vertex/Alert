@@ -24,6 +24,34 @@ module.exports = {
                         loader: "sass-loader" // compiles Sass to CSS
                     }
                 ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: "style-loader" // creates style nodes from JS strings
+                    },
+                    {
+                        loader: "css-loader" // translates CSS into CommonJS
+                    },
+                    {
+                        loader: "less-loader" // compiles Sass to CSS
+                    }
+                ]
+            },
+            {
+                test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff"
+            },
+            {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader:
+                    "url-loader?limit=10000&mimetype=application/octet-stream"
+            },
+            { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url-loader?limit=10000&mimetype=image/svg+xml"
             }
         ]
     },

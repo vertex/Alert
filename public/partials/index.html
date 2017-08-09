@@ -1,0 +1,45 @@
+<div ng-if="response !== false" ng-init="showFilters=false" class="container">
+    <div class="row">
+        <div class="co-md-12">
+            <button class="btn btn-primary" ng-click="showFilters = !showFilters">Filters</button>
+            <div class="panel panel-default" ng-if="showFilters">
+                <table width="200">
+                    <tr>
+                        <td>Severity</td>
+                        <td>
+                            <select ng-model="query.query.severity" ng-change="getAlerts()">
+                                <option ng-repeat="severity in [undefined, 'minor', 'major', 'critical']" ng-value="severity">{{severity === undefined ? 'All' : severity}}</option>
+                            </select> 
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="co-md-12">
+             Showing 
+            <select ng-model="response.limit" ng-change="getAlerts( { limit: response.limit } )">
+                <option ng-repeat="limit in [10, 15, 20, 30]" ng-value="limit">{{limit}}</option>
+            </select> 
+            of <strong>{{response.total}}</strong>
+        </div>
+        <div class="co-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th ng-click="getAlerts({sortBy: 'name'})">name</th>
+                        <th ng-click="getAlerts({sortBy: 'severity'})">severity</th>
+                        <th ng-click="getAlerts({sortBy: 'number'})">number</th>
+                    </tr>
+                </thead>
+                <tobdy>
+                    <tr ng-repeat="alert in response.data">
+                        <td data-ng-bind="alert.meta.account.name"></td>
+                        <td data-ng-bind="alert.severity"></td>
+                        <td data-ng-bind="alert.number"></td>
+                    </tr>
+                </tobdy>
+            </table>
+            <ul uib-pagination total-items="response.total" ng-model="response.page" max-size="5" class="pagination-sm" boundary-link-numbers="true" rotate="false" ng-change="getAlerts({page: response.page})"></ul>
+        </div>
+    </div>
+</div>
